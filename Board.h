@@ -11,6 +11,10 @@ class Board {
 		void setTile(int row, int col, int value);
 		int getTile(int row, int col) const;
 		void printRandomTiles(int count, int seed);
+		void slideLeft();
+		void slideRight();
+		void slideUp();
+		void slideDown();
 
 	private:
 		int size_;

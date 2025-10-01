@@ -48,3 +48,60 @@ void Board::printRandomTiles(int count, int seed) {
         }
     }
 }
+
+//helper method for the slides
+vector<int> slideAndCombine(const vector<int>& line) {
+    vector<int> result;
+    int prev = 0;
+    for (int num : line) {
+        if (num == 0) continue;
+        if (prev == 0) {
+            prev = num;
+        } else if (prev == num) {
+            result.push_back(prev * 2);
+            prev = 0;
+        } else {
+            result.push_back(prev);
+            prev = num;
+        }
+    }
+    if (prev != 0) result.push_back(prev);
+    while (result.size() < line.size()) result.push_back(0);
+    return result;
+}
+
+// Slide all rows left
+void Board::slideLeft() {
+    for (int i = 0; i < size_; ++i) {
+        grid_[i] = slideAndCombine(grid_[i]);
+    }
+}
+
+// Slide all rows right
+void Board::slideRight() {
+    for (int i = 0; i < size_; ++i) {
+        vector<int> reversed(grid_[i].rbegin(), grid_[i].rend());
+        reversed = slideAndCombine(reversed);
+        grid_[i] = vector<int>(reversed.rbegin(), reversed.rend());
+    }
+}
+
+// Slide all columns up
+void Board::slideUp() {
+    for (int j = 0; j < size_; ++j) {
+        vector<int> col;
+        for (int i = 0; i < size_; ++i) col.push_back(grid_[i][j]);
+        col = slideAndCombine(col);
+        for (int i = 0; i < size_; ++i) grid_[i][j] = col[i];
+    }
+}
+
+// Slide all columns down
+void Board::slideDown() {
+    for (int j = 0; j < size_; ++j) {
+        vector<int> col;
+        for (int i = size_ - 1; i >= 0; --i) col.push_back(grid_[i][j]);
+        col = slideAndCombine(col);
+        for (int i = size_ - 1, k = 0; i >= 0; --i, ++k) grid_[i][j] = col[k];
+    }
+}

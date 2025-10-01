@@ -1,0 +1,4 @@
+# Ignore object files
+*.o
+
+2025
