@@ -15,6 +15,7 @@ class Board {
 		void slideRight();
 		void slideUp();
 		void slideDown();
+		void spawnTile(int seed);
 
 	private:
 		int size_;

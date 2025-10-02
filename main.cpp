@@ -34,12 +34,27 @@ int main(int argc, char* argv[]){
         char move;
         cin >> move;
 		move = tolower(move);
+		bool moved = false;
         if (move == 'q') break;
-        if (move == 'a') board.slideLeft();
-        else if (move == 'd') board.slideRight();
-        else if (move == 'w') board.slideUp();
-        else if (move == 's') board.slideDown();
+        if (move == 'a'){ 
+			board.slideLeft(); 
+			moved = true;
+		}
+        else if (move == 'd'){
+			board.slideRight();
+			moved = true;
+		}
+        else if (move == 'w'){
+			board.slideUp();
+			moved = true;
+		}
+        else if (move == 's'){
+			board.slideDown();
+			moved = true;
+		}
         else cout << "Invalid input!\n";
+		if(moved)
+			board.spawnTile(static_cast<unsigned>(time(nullptr)));
     }
     cout << "Game over!\n";	
 	

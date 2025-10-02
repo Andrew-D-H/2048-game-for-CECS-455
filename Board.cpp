@@ -3,6 +3,8 @@
 #include <iomanip>
 #include <random>
 #include <vector>
+#include <cstdlib> 
+#include <ctime>   
 
 using namespace std;
 
@@ -104,4 +106,30 @@ void Board::slideDown() {
         col = slideAndCombine(col);
         for (int i = size_ - 1, k = 0; i >= 0; --i, ++k) grid_[i][j] = col[k];
     }
+}
+
+
+//spawn tile
+void Board::spawnTile(int seed) {
+    // Seed the random number generator
+    srand(seed);
+
+    // Find all empty squares
+    vector<pair<int, int>> empty;
+    for (int i = 0; i < size_; ++i)
+        for (int j = 0; j < size_; ++j)
+            if (grid_[i][j] == 0)
+                empty.push_back({i, j});
+    if (empty.empty()) return; // No empty square, do nothing
+
+    // Pick a random empty square
+    int idx = rand() % empty.size();
+
+    // 90% chance for 2, 10% for 4
+    int tileValue = 2;
+    if (rand() % 10 == 0)
+        tileValue = 4;
+
+    auto [row, col] = empty[idx];
+    grid_[row][col] = tileValue;
 }
