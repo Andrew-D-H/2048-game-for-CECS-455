@@ -16,8 +16,10 @@ class Board {
 		void slideUp();
 		void slideDown();
 		void spawnTile(int seed);
+		int getScore() const;
 
 	private:
 		int size_;
 		vector<vector<int>> grid_;
+		int score = 0;
 };

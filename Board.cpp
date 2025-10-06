@@ -12,6 +12,7 @@ Board::Board(int size) : size_(size), grid_(size, vector<int>(size, 0)) {}
 
 //prints the board
 void Board::print() const {
+	cout << "Score: " << score << endl;
     cout << "+------------------------+" << endl;
     for (int i = 0; i < size_; ++i) {
         cout << "|";
@@ -52,38 +53,45 @@ void Board::printRandomTiles(int count, int seed) {
 }
 
 //helper method for the slides
-vector<int> slideAndCombine(const vector<int>& line) {
+vector<int> slideAndCombine(const vector<int>& line, int& score) {
     vector<int> result;
     int prev = 0;
     for (int num : line) {
-        if (num == 0) continue;
-        if (prev == 0) {
+        if(num == 0)
+			continue;
+        if(prev == 0){
             prev = num;
-        } else if (prev == num) {
-            result.push_back(prev * 2);
+        }
+		else if(prev == num) {
+			int comb = prev * 2;
+			result.push_back(comb);
+			score += comb;
             prev = 0;
-        } else {
+        }
+		else{
             result.push_back(prev);
             prev = num;
         }
     }
-    if (prev != 0) result.push_back(prev);
-    while (result.size() < line.size()) result.push_back(0);
+    if (prev != 0) 
+		result.push_back(prev);
+    while(result.size() < line.size()) 
+		result.push_back(0);
     return result;
 }
 
 // Slide all rows left
 void Board::slideLeft() {
     for (int i = 0; i < size_; ++i) {
-        grid_[i] = slideAndCombine(grid_[i]);
+        grid_[i] = slideAndCombine(grid_[i], score);
     }
 }
 
 // Slide all rows right
 void Board::slideRight() {
     for (int i = 0; i < size_; ++i) {
-        vector<int> reversed(grid_[i].rbegin(), grid_[i].rend());
-        reversed = slideAndCombine(reversed);
+        vector<int> reversed(grid_[i].rbegin(),	 grid_[i].rend());
+		reversed = slideAndCombine(reversed, score);
         grid_[i] = vector<int>(reversed.rbegin(), reversed.rend());
     }
 }
@@ -93,7 +101,7 @@ void Board::slideUp() {
     for (int j = 0; j < size_; ++j) {
         vector<int> col;
         for (int i = 0; i < size_; ++i) col.push_back(grid_[i][j]);
-        col = slideAndCombine(col);
+        col = slideAndCombine(col, score);;
         for (int i = 0; i < size_; ++i) grid_[i][j] = col[i];
     }
 }
@@ -103,7 +111,7 @@ void Board::slideDown() {
     for (int j = 0; j < size_; ++j) {
         vector<int> col;
         for (int i = size_ - 1; i >= 0; --i) col.push_back(grid_[i][j]);
-        col = slideAndCombine(col);
+        col = slideAndCombine(col, score);;
         for (int i = size_ - 1, k = 0; i >= 0; --i, ++k) grid_[i][j] = col[k];
     }
 }
@@ -132,4 +140,8 @@ void Board::spawnTile(int seed) {
 
     auto [row, col] = empty[idx];
     grid_[row][col] = tileValue;
+}
+
+int Board::getScore() const {
+    return score;
 }

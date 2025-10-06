@@ -2,7 +2,7 @@ CXX = g++
 CXXFLAGS = -Wall -std=c++23
 SRC = main.cpp Board.cpp
 OBJ = $(SRC:.cpp=.o)
-TARGET = 2025
+TARGET = 2048
 
 all: $(TARGET)
 
