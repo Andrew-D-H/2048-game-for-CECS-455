@@ -178,19 +178,17 @@ int Board::getScore() const {
 }
 
 bool Board::isGameOver() const {
-    // Check for empty spots
-    for (int i = 0; i < size_; ++i)
-        for (int j = 0; j < size_; ++j)
-            if (grid_[i][j] == 0)
-                return false;
-    // Check for possible moves
-    for (int i = 0; i < size_; ++i) {
-        for (int j = 0; j < size_; ++j) {
-            if (i + 1 < size_ && grid_[i][j] == grid_[i+1][j])
-                return false;
-            if (j + 1 < size_ && grid_[i][j] == grid_[i][j+1])
-                return false;
-        }
-    }
+    Board temp = *this;
+    if (temp.slideLeft()) 
+		return false;
+    temp = *this;
+    if (temp.slideRight()) 
+		return false;
+    temp = *this;
+    if (temp.slideUp()) 
+		return false;
+    temp = *this;
+    if (temp.slideDown()) 
+		return false;
     return true;
 }

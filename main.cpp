@@ -54,6 +54,7 @@ int main(int argc, char* argv[]){
 		if(moved)
 			board.spawnTile(static_cast<int>(time(nullptr)));
 		if(board.isGameOver()){
+			board.print();
 			cout << "\nGame Over! Final Score: " << board.getScore() << endl;
 			cout << "Spawning in a new board: \n\n";
 			board = Board(4);
