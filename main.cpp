@@ -52,9 +52,16 @@ int main(int argc, char* argv[]){
 			board.slideDown();
 			moved = true;
 		}
-        else cout << "Invalid input!\n";
+        else 
+			cout << "Invalid input!\n";
 		if(moved)
-			board.spawnTile(static_cast<unsigned>(time(nullptr)));
+			board.spawnTile(static_cast<int>(time(nullptr)));
+		if(board.isGameOver()){
+			cout << "\nGame Over! Final Score: " << board.getScore() << endl;
+			cout << "Spawning in a new board: \n\n";
+			board = Board(4);
+			board.printRandomTiles(2, static_cast<int>(time(nullptr)));
+		}
     }
     cout << "Game over!\n";	
 	

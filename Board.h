@@ -17,6 +17,7 @@ class Board {
 		void slideDown();
 		void spawnTile(int seed);
 		int getScore() const;
+		bool isGameOver() const;
 
 	private:
 		int size_;
