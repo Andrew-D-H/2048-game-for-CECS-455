@@ -5,6 +5,10 @@ How to run (Ubuntu):
 1. Run the makefile using /make
 2. type ./2048 to run with a randomly generate seed or ./2048 UserProvidedNumber (ex: ./2048 123125) to use a specific seed
 
+Control Scheme: 
+input W/A/S/D then enter in order to shift the numbers
+
+
 
 
 
