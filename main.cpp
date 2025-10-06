@@ -35,22 +35,19 @@ int main(int argc, char* argv[]){
         cin >> move;
 		move = tolower(move);
 		bool moved = false;
-        if (move == 'q') break;
-        if (move == 'a'){ 
-			board.slideLeft(); 
-			moved = true;
+        if(move == 'q') 
+			break;
+        if(move == 'a'){ 
+			moved = board.slideLeft(); 
 		}
-        else if (move == 'd'){
-			board.slideRight();
-			moved = true;
+        else if(move == 'd'){
+			moved = board.slideRight();
 		}
-        else if (move == 'w'){
-			board.slideUp();
-			moved = true;
+        else if(move == 'w'){
+			moved = board.slideUp();
 		}
-        else if (move == 's'){
-			board.slideDown();
-			moved = true;
+        else if(move == 's'){
+			moved = board.slideDown();
 		}
         else 
 			cout << "Invalid input!\n";

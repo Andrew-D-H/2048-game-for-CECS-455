@@ -11,10 +11,10 @@ class Board {
 		void setTile(int row, int col, int value);
 		int getTile(int row, int col) const;
 		void printRandomTiles(int count, int seed);
-		void slideLeft();
-		void slideRight();
-		void slideUp();
-		void slideDown();
+		bool slideLeft();
+		bool slideRight();
+		bool slideUp();
+		bool slideDown();
 		void spawnTile(int seed);
 		int getScore() const;
 		bool isGameOver() const;

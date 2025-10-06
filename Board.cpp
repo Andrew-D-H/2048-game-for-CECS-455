@@ -81,39 +81,70 @@ vector<int> slideAndCombine(const vector<int>& line, int& score) {
 }
 
 // Slide all rows left
-void Board::slideLeft() {
-    for (int i = 0; i < size_; ++i) {
+bool Board::slideLeft() {
+    bool moved = false;
+    for(int i = 0; i < size_; ++i){
+        vector<int> old = grid_[i];
         grid_[i] = slideAndCombine(grid_[i], score);
+        if(grid_[i] != old) 
+			moved = true;
     }
+    return moved;
 }
 
+
 // Slide all rows right
-void Board::slideRight() {
-    for (int i = 0; i < size_; ++i) {
-        vector<int> reversed(grid_[i].rbegin(),	 grid_[i].rend());
-		reversed = slideAndCombine(reversed, score);
-        grid_[i] = vector<int>(reversed.rbegin(), reversed.rend());
+bool Board::slideRight() {
+    bool moved = false;
+    for(int i = 0; i < size_; ++i){
+        vector<int> old = grid_[i];
+        vector<int> reversed(old.rbegin(), old.rend());
+        reversed = slideAndCombine(reversed, score);
+        vector<int> newVar(reversed.rbegin(), reversed.rend());
+        grid_[i] = newVar;
+        if(grid_[i] != old) 
+			moved = true;
     }
+    return moved;
 }
 
 // Slide all columns up
-void Board::slideUp() {
-    for (int j = 0; j < size_; ++j) {
-        vector<int> col;
-        for (int i = 0; i < size_; ++i) col.push_back(grid_[i][j]);
-        col = slideAndCombine(col, score);;
-        for (int i = 0; i < size_; ++i) grid_[i][j] = col[i];
+bool Board::slideUp() {
+	bool moved = false;
+    for(int j = 0; j < size_; ++j) {
+        vector<int> col, old;
+        for(int i = 0; i < size_; ++i){
+            col.push_back(grid_[i][j]);
+            old.push_back(grid_[i][j]);
+        }
+        col = slideAndCombine(col, score);
+        for(int i = 0; i < size_; ++i) 
+			grid_[i][j] = col[i];
+        if(col != old) 
+			moved = true;
     }
+    return moved;
 }
 
 // Slide all columns down
-void Board::slideDown() {
-    for (int j = 0; j < size_; ++j) {
-        vector<int> col;
-        for (int i = size_ - 1; i >= 0; --i) col.push_back(grid_[i][j]);
-        col = slideAndCombine(col, score);;
-        for (int i = size_ - 1, k = 0; i >= 0; --i, ++k) grid_[i][j] = col[k];
+bool Board::slideDown() {
+    bool moved = false;
+    for(int j = 0; j < size_; ++j) {
+        vector<int> col, old;
+        for(int i = size_ - 1; i >= 0; --i) {
+            col.push_back(grid_[i][j]);
+            old.push_back(grid_[i][j]);
+        }
+        col = slideAndCombine(col, score);
+        for(int i = size_ - 1, k = 0; i >= 0; --i, ++k) 
+			grid_[i][j] = col[k];
+        vector<int> newVar;
+        for(int i = size_ - 1; i >= 0; --i) 
+			newVar.push_back(grid_[i][j]);
+        if(newVar != old) 
+			moved = true;
     }
+    return moved;
 }
 
 
